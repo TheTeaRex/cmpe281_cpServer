@@ -1,13 +1,10 @@
 var fs = require('fs');
 var express = require('express');
-var Client = require('node-rest-client').Client;
 var aws = require('aws-sdk');
-var crypto = require('crypto');
 var sh = require('shorthash');
 
 var app = express();
 app.use(express.bodyParser());
-app.use("/images", express.static(__dirname + '/images'));
 
 var queueUrl = "https://sqs.us-west-2.amazonaws.com/060340690398/team6cp";
 
@@ -20,7 +17,7 @@ var sqs = new aws.SQS();
 var convertURL = function(longurl, callback) {
     //shorturl = crypto.createHash('md5').update(longurl).digest("hex");
     shorturl = sh.unique(longurl)
-    sendMessageSQS(longurl, shorturl);
+    //sendMessageSQS(longurl, shorturl);
     callback(shorturl);
 }
 
