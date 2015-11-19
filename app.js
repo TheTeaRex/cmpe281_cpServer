@@ -9,6 +9,7 @@ app.use(express.bodyParser());
 
 var queueUrl = "https://sqs.us-west-2.amazonaws.com/060340690398/team6cp";
 var ipUrl = "http://169.254.169.254/latest/meta-data/public-ipv4";
+var shortDomain = "http://team6.com/";
 
 // Load your AWS credentials and try to instantiate the object.
 aws.config.loadFromPath(__dirname + '/config.json');
@@ -18,7 +19,7 @@ var sqs = new aws.SQS();
 
 var convertURL = function(longurl, callback) {
     //shorturl = crypto.createHash('md5').update(longurl).digest("hex");
-    shorturl = sh.unique(longurl)
+    shorturl = shortDomain + sh.unique(longurl);
     sendMessageSQS(longurl, shorturl);
     callback(shorturl);
 }
