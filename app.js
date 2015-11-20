@@ -1,4 +1,5 @@
 var fs = require('fs');
+var https = require('https');
 var express = require('express');
 var aws = require('aws-sdk');
 var sh = require('shorthash');
@@ -12,13 +13,18 @@ var ipUrl = "http://169.254.169.254/latest/meta-data/public-ipv4";
 var shortDomain = "http://team6.com/";
 
 // Load your AWS credentials and try to instantiate the object.
-aws.config.loadFromPath(__dirname + '/config.json');
+aws.config.loadFromPath(__dirname + '/../config.json');
 
 // Instantiate SQS.
 var sqs = new aws.SQS();
 
+// getting the keys
+var options = {
+    key : fs.readFileSync('../keys/cpserver.key'),
+    cert : fs.readFileSync('../keys/cpserver.crt')
+}
+
 var convertURL = function(longurl, callback) {
-    //shorturl = crypto.createHash('md5').update(longurl).digest("hex");
     shorturl = shortDomain + sh.unique(longurl);
     sendMessageSQS(longurl, shorturl);
     callback(shorturl);
@@ -71,4 +77,5 @@ var handle_post = function (req, res) {
     });
 }
 app.post("*", handle_post );
-app.listen(process.env.PORT || 80);
+//app.listen(process.env.PORT || 80);
+https.createServer(options, app).listen(process.env.PORT || 443);
