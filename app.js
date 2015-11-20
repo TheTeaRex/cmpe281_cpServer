@@ -1,12 +1,15 @@
 var fs = require('fs');
 var https = require('https');
 var express = require('express');
+var bodyParser = require('body-parser');
 var aws = require('aws-sdk');
 var sh = require('shorthash');
 var request = require('request');
 
 var app = express();
-app.use(express.bodyParser());
+//app.use(express.bodyParser());
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
 
 var queueUrl = "https://sqs.us-west-2.amazonaws.com/060340690398/team6cp";
 var ipUrl = "http://169.254.169.254/latest/meta-data/public-ipv4";
@@ -17,13 +20,13 @@ aws.config.loadFromPath(__dirname + '/../config.json');
 
 // Instantiate SQS.
 var sqs = new aws.SQS();
-
+/*
 // getting the keys
 var options = {
     key : fs.readFileSync('../keys/cpserver.key'),
     cert : fs.readFileSync('../keys/cpserver.crt')
 }
-
+*/
 var convertURL = function(longurl, callback) {
     shorturl = shortDomain + sh.unique(longurl);
     sendMessageSQS(longurl, shorturl);
@@ -77,5 +80,6 @@ var handle_post = function (req, res) {
     });
 }
 app.post("*", handle_post );
-//app.listen(process.env.PORT || 80);
-https.createServer(options, app).listen(process.env.PORT || 443);
+app.listen(process.env.PORT || 80);
+console.log('CP Server Started!');
+//https.createServer(options, app).listen(process.env.PORT || 443);

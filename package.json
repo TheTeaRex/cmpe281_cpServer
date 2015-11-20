@@ -3,11 +3,11 @@
   "description": "Simple Test Form",
   "version": "1.0.0",
   "scripts": {
-    "start": "node app.js",
-    "test": "vows --spec"
+    "start": "node app.js"
   },
   "dependencies": {
     "aws-sdk": "^2.2.17",
+    "body-parser": "^1.14.1",
     "express": "3.x",
     "fs": "0.0.2",
     "https": "^1.0.0",
