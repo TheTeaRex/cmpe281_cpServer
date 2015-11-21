@@ -28,9 +28,9 @@ var options = {
 }
 */
 var convertURL = function(longurl, callback) {
-    shorturl = shortDomain + sh.unique(longurl);
+    shorturl = sh.unique(longurl);
     sendMessageSQS(longurl, shorturl);
-    callback(shorturl);
+    callback(shortDomain + sh.unique(longurl));
 }
 
 var getPublicIP = function(callback){
