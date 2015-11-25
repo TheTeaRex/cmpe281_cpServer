@@ -16,7 +16,7 @@ var ipUrl = "http://169.254.169.254/latest/meta-data/public-ipv4";
 var shortDomain = "http://team6.com/";
 
 // Load your AWS credentials and try to instantiate the object.
-aws.config.loadFromPath(__dirname + '/../config.json');
+aws.config.loadFromPath(__dirname + '/cpconfig.json');
 
 // Instantiate SQS.
 var sqs = new aws.SQS();
