@@ -11,12 +11,12 @@ var app = express();
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
-var queueUrl = "https://sqs.us-west-2.amazonaws.com/060340690398/team6cp";
+var queueUrl = "amazonQueueLink";
 var ipUrl = "http://169.254.169.254/latest/meta-data/public-ipv4";
-var shortDomain = "http://team6.com/";
+var shortDomain = "http://54.193.121.101/";
 
 // Load your AWS credentials and try to instantiate the object.
-aws.config.loadFromPath(__dirname + '/cpconfig.json');
+aws.config.loadFromPath(__dirname + '/config.json');
 
 // Instantiate SQS.
 var sqs = new aws.SQS();
